@@ -1,31 +1,37 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore poetas brasileiros e suas obras em um catálogo interativo.">
+    <title>Poetas Brasileiros e Suas Obras</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <title>Poetas Brasileiros e suas Obras</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
-
 <body>
-    <header>
-        <h1>Poetas Brasileiros e suas Obras <span role="img" aria-label="poetry">📚</span></h1>
+    <header role="banner">
+        <h1>Poetas Brasileiros e Suas Obras <i class="fas fa-book-open"></i></h1>
     </header>
-    <main>
-        <section class="pesquisa">
-            <input type="text" placeholder="Digite o nome do poeta ou título da obra" id="campo-pesquisa">
-            <button onclick="pesquisar()">Pesquisar</button>
+    <main role="main">
+        <section class="pesquisa" role="search">
+            <label for="campo-pesquisa" class="sr-only">Digite o nome do poeta ou título da obra</label>
+            <input type="text" id="campo-pesquisa" placeholder="Digite o nome do poeta ou título da obra" aria-describedby="search-hint">
+            <div class="botoes-pesquisa">
+                <button onclick="pesquisar()" aria-label="Pesquisar poetas ou obras"><i class="fas fa-search"></i> Pesquisar</button>
+                <button onclick="resetarPesquisa()" aria-label="Limpar pesquisa"><i class="fas fa-undo"></i> Limpar</button>
+            </div>
+            <p id="search-hint" class="search-hint">Digite o nome de um poeta ou obra para começar.</p>
         </section>
-        <section class="resultados-pesquisa" id="resultados-pesquisa">
+        <section class="resultados-pesquisa" id="resultados-pesquisa" role="region" aria-live="polite">
+            <p class="mensagem-inicial">Pesquise acima para descobrir poetas brasileiros e suas obras.<br> As informações aparecerão aqui!</p>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2024 - Poetas Brasileiros. Todos os direitos reservados.</p>
-        <p>Entre em contato pelo e-mail: alexiabcamargo@gmail.com</p>
+    <footer role="contentinfo">
+        <p>&copy; 2025 - Poetas Brasileiros. Todos os direitos reservados.</p>
+        <p>Entre em contato: <a href="mailto:alexiabcamargo@gmail.com" aria-label="Enviar e-mail para contato">alexiabcamargo@gmail.com</a></p>
     </footer>
     <script src="dados.js"></script>
     <script src="app.js"></script>
 </body>
-
 </html>
