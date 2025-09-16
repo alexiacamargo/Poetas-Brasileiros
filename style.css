@@ -1,133 +1,211 @@
-/* Adiciona estilo ao body e ao layout */
+/* Estilização geral do corpo */
 body {
-    font-family: "Alegreya", serif;
-    background-color: #F5F5F5;
+    font-family: "Merriweather", serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     margin: 0;
     padding: 0;
-    color: #3E2723;
+    color: #2c3e50;
+    line-height: 1.6;
 }
 
 /* Estiliza o cabeçalho */
 header {
-    background-color: #6D4C41;
-    color: #FFFFFF;
-    padding: 1rem;
+    background: linear-gradient(to right, #2c3e50, #3498db);
+    color: #fff;
+    padding: 2rem;
     text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Estiliza o título */
 header h1 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     margin: 0;
-    letter-spacing: 0.1rem;
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+    animation: fadeIn 1s ease-in;
+}
+
+/* Animação de entrada para o título */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Estiliza a seção de pesquisa */
 .pesquisa {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem auto;
+    max-width: 50rem;
+    padding: 0 1rem;
 }
 
-/* Estiliza os inputs dentro da seção de pesquisa */
+/* Estiliza o campo de input */
 .pesquisa input {
-    width: 100%; /* 100% da largura do contêiner pai */
-    max-width: 40rem; /* Limita a largura máxima */
-    border: 1px solid #3E2723;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-    color: #3E2723;
-    font-size: 1rem;
+    flex: 1;
+    min-width: 200px;
+    padding: 0.8rem 1rem;
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-/* Estiliza os botões dentro da seção de pesquisa */
+.pesquisa input:focus {
+    outline: none;
+    border-color: #2c3e50;
+    box-shadow: 0 0 8px rgba(44, 62, 80, 0.3);
+}
+
+/* Estiliza os botões */
 .pesquisa button {
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 1.5rem;
     border: none;
-    border-radius: 0.5rem;
-    background-color: #6D4C41;
-    color: #FFFFFF;
+    border-radius: 8px;
+    background-color: #3498db;
+    color: #fff;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .pesquisa button:hover {
-    background-color: #4E342E;
+    background-color: #2c3e50;
+    transform: scale(1.05);
 }
 
-/* Estiliza a caixa de resultados da pesquisa */
+/* Estiliza o botão de limpar */
+.pesquisa button:nth-child(3) {
+    background-color: #e74c3c;
+}
+
+.pesquisa button:nth-child(3):hover {
+    background-color: #c0392b;
+}
+
+/* Estiliza a seção de resultados */
 .resultados-pesquisa {
-    width: 100%; /* 100% da largura do contêiner pai */
-    max-width: 60rem; /* Limita a largura máxima */
-    max-height: 60vh; /* Altura máxima da caixa de resultados */
-    overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+    max-width: 70rem;
     margin: 2rem auto;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    background-color: #FFFFFF;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    display: none; /* Inicialmente escondido */
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    max-height: 70vh;
+    overflow-y: auto;
+    display: none;
+    transition: opacity 0.5s ease;
 }
 
-/* Exibe a caixa de resultados quando a classe 'mostrar' é adicionada */
 .resultados-pesquisa.mostrar {
     display: block;
+    opacity: 1;
+}
+
+/* Estiliza a mensagem de carregamento */
+.loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #3498db;
+    padding: 1rem;
 }
 
 /* Estiliza cada item de resultado */
 .item-resultado {
-    background: #FAF3E0;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Estiliza os títulos dentro dos itens de resultado */
+.item-resultado:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
 .item-resultado h2 {
     font-size: 1.8rem;
-    color: #3E2723;
-    margin-top: 0;
+    color: #2c3e50;
+    margin: 0 0 0.5rem;
 }
 
-/* Estiliza os links dentro dos itens de resultado */
 .item-resultado a {
+    color: #3498db;
     text-decoration: none;
-    color: #6D4C41;
+    font-weight: 600;
 }
 
 .item-resultado a:hover {
     text-decoration: underline;
+    color: #2c3e50;
 }
 
-/* Estiliza a descrição meta dentro dos itens de resultado */
+.item-resultado ul {
+    list-style: none;
+    padding: 0;
+}
+
+.item-resultado li {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
 .descricao-meta {
-    color: #5D4037;
+    color: #7f8c8d;
     margin: 0.5rem 0;
 }
 
-/* Estiliza o rodapé da página */
+/* Estiliza o rodapé */
 footer {
-    background-color: #6D4C41;
-    color: #FFFFFF;
+    background: linear-gradient(to right, #2c3e50, #3498db);
+    color: #fff;
     text-align: center;
-    padding: 1rem;
+    padding: 1.5rem;
     position: relative;
-    bottom: 0;
     width: 100%;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
-/* Media queries para responsividade em telas menores */
-@media (max-width: 600px) {
-    .pesquisa input {
-        max-width: 90%; /* Mais espaço em telas pequenas */
+footer a {
+    color: #ecf0f1;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .pesquisa {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pesquisa input,
+    .pesquisa button {
+        width: 100%;
     }
 
     .resultados-pesquisa {
-        max-width: 90%; /* Também se aplica aos resultados */
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.6rem;
+    }
+
+    .item-resultado h2 {
+        font-size: 1.4rem;
     }
 }
