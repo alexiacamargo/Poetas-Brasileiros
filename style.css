@@ -1,58 +1,133 @@
-function normalizeString(str) {
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+/* Adiciona estilo ao body e ao layout */
+body {
+    font-family: "Alegreya", serif;
+    background-color: #F5F5F5;
+    margin: 0;
+    padding: 0;
+    color: #3E2723;
 }
 
-function pesquisar() {
-    let section = document.getElementById("resultados-pesquisa");
-    let campoPesquisa = document.getElementById("campo-pesquisa");
-
-    // Inicialmente, esconder a seção de resultados
-    section.classList.remove('mostrar');
-
-    let pesquisaNormalizada = normalizeString(campoPesquisa.value.trim());
-
-    if (!pesquisaNormalizada) {
-        section.innerHTML = "<p>Nada foi encontrado. Você precisa digitar o nome do poeta ou título da obra.</p>";
-        return;
-    }
-
-    let resultados = "";
-
-    for (let dado of dados) {
-        let poeta = normalizeString(dado.poeta);
-        let descricao = normalizeString(dado.descricao);
-        let obras = dado.obras.map(obra => normalizeString(obra.titulo)).join(' ');
-
-        if (poeta.includes(pesquisaNormalizada) || descricao.includes(pesquisaNormalizada) || obras.includes(pesquisaNormalizada)) {
-            resultados += `
-            <div class="item-resultado">
-                <h2><a href="${dado.wikipedia}" target="_blank">${dado.poeta}</a></h2>
-                <p>${dado.descricao}</p>
-                <ul>
-                    ${dado.obras.map(obra => `
-                        <li><a href="${obra.link}" target="_blank">${obra.titulo}</a></li>
-                    `).join('')}
-                </ul>
-            </div>
-            `;
-        }
-    }
-
-    if (!resultados) {
-        resultados = "<p>Nada foi encontrado.</p>";
-    }
-
-    section.innerHTML = resultados;
-    // Mostrar a seção de resultados após a pesquisa
-    section.classList.add('mostrar');
-
-    // Limpar o campo de pesquisa
-    campoPesquisa.value = ''; // Limpa o campo de pesquisa
+/* Estiliza o cabeçalho */
+header {
+    background-color: #6D4C41;
+    color: #FFFFFF;
+    padding: 1rem;
+    text-align: center;
 }
 
-// Adiciona o evento de escuta para o campo de pesquisa
-document.getElementById("campo-pesquisa").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-        pesquisar();
+/* Estiliza o título */
+header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    letter-spacing: 0.1rem;
+}
+
+/* Estiliza a seção de pesquisa */
+.pesquisa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem;
+}
+
+/* Estiliza os inputs dentro da seção de pesquisa */
+.pesquisa input {
+    width: 100%; /* 100% da largura do contêiner pai */
+    max-width: 40rem; /* Limita a largura máxima */
+    border: 1px solid #3E2723;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    color: #3E2723;
+    font-size: 1rem;
+}
+
+/* Estiliza os botões dentro da seção de pesquisa */
+.pesquisa button {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #6D4C41;
+    color: #FFFFFF;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pesquisa button:hover {
+    background-color: #4E342E;
+}
+
+/* Estiliza a caixa de resultados da pesquisa */
+.resultados-pesquisa {
+    width: 100%; /* 100% da largura do contêiner pai */
+    max-width: 60rem; /* Limita a largura máxima */
+    max-height: 60vh; /* Altura máxima da caixa de resultados */
+    overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+    margin: 2rem auto;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    display: none; /* Inicialmente escondido */
+}
+
+/* Exibe a caixa de resultados quando a classe 'mostrar' é adicionada */
+.resultados-pesquisa.mostrar {
+    display: block;
+}
+
+/* Estiliza cada item de resultado */
+.item-resultado {
+    background: #FAF3E0;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estiliza os títulos dentro dos itens de resultado */
+.item-resultado h2 {
+    font-size: 1.8rem;
+    color: #3E2723;
+    margin-top: 0;
+}
+
+/* Estiliza os links dentro dos itens de resultado */
+.item-resultado a {
+    text-decoration: none;
+    color: #6D4C41;
+}
+
+.item-resultado a:hover {
+    text-decoration: underline;
+}
+
+/* Estiliza a descrição meta dentro dos itens de resultado */
+.descricao-meta {
+    color: #5D4037;
+    margin: 0.5rem 0;
+}
+
+/* Estiliza o rodapé da página */
+footer {
+    background-color: #6D4C41;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+/* Media queries para responsividade em telas menores */
+@media (max-width: 600px) {
+    .pesquisa input {
+        max-width: 90%; /* Mais espaço em telas pequenas */
     }
-});
+
+    .resultados-pesquisa {
+        max-width: 90%; /* Também se aplica aos resultados */
+    }
+}
