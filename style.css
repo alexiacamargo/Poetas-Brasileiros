@@ -1,211 +1,58 @@
-/* Estilização geral do corpo */
-body {
-    font-family: "Merriweather", serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    margin: 0;
-    padding: 0;
-    color: #2c3e50;
-    line-height: 1.6;
+function normalizeString(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
 
-/* Estiliza o cabeçalho */
-header {
-    background: linear-gradient(to right, #2c3e50, #3498db);
-    color: #fff;
-    padding: 2rem;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+function pesquisar() {
+    let section = document.getElementById("resultados-pesquisa");
+    let campoPesquisa = document.getElementById("campo-pesquisa");
 
-/* Estiliza o título */
-header h1 {
-    font-size: 2.8rem;
-    margin: 0;
-    letter-spacing: 0.05rem;
-    text-transform: uppercase;
-    animation: fadeIn 1s ease-in;
-}
+    // Inicialmente, esconder a seção de resultados
+    section.classList.remove('mostrar');
 
-/* Animação de entrada para o título */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+    let pesquisaNormalizada = normalizeString(campoPesquisa.value.trim());
 
-/* Estiliza a seção de pesquisa */
-.pesquisa {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    margin: 2rem auto;
-    max-width: 50rem;
-    padding: 0 1rem;
-}
-
-/* Estiliza o campo de input */
-.pesquisa input {
-    flex: 1;
-    min-width: 200px;
-    padding: 0.8rem 1rem;
-    border: 2px solid #3498db;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.pesquisa input:focus {
-    outline: none;
-    border-color: #2c3e50;
-    box-shadow: 0 0 8px rgba(44, 62, 80, 0.3);
-}
-
-/* Estiliza os botões */
-.pesquisa button {
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    background-color: #3498db;
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.pesquisa button:hover {
-    background-color: #2c3e50;
-    transform: scale(1.05);
-}
-
-/* Estiliza o botão de limpar */
-.pesquisa button:nth-child(3) {
-    background-color: #e74c3c;
-}
-
-.pesquisa button:nth-child(3):hover {
-    background-color: #c0392b;
-}
-
-/* Estiliza a seção de resultados */
-.resultados-pesquisa {
-    max-width: 70rem;
-    margin: 2rem auto;
-    padding: 1.5rem;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    max-height: 70vh;
-    overflow-y: auto;
-    display: none;
-    transition: opacity 0.5s ease;
-}
-
-.resultados-pesquisa.mostrar {
-    display: block;
-    opacity: 1;
-}
-
-/* Estiliza a mensagem de carregamento */
-.loading {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #3498db;
-    padding: 1rem;
-}
-
-/* Estiliza cada item de resultado */
-.item-resultado {
-    background: #f9f9f9;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.item-resultado:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.item-resultado h2 {
-    font-size: 1.8rem;
-    color: #2c3e50;
-    margin: 0 0 0.5rem;
-}
-
-.item-resultado a {
-    color: #3498db;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.item-resultado a:hover {
-    text-decoration: underline;
-    color: #2c3e50;
-}
-
-.item-resultado ul {
-    list-style: none;
-    padding: 0;
-}
-
-.item-resultado li {
-    margin: 0.5rem 0;
-    font-size: 1.1rem;
-}
-
-.descricao-meta {
-    color: #7f8c8d;
-    margin: 0.5rem 0;
-}
-
-/* Estiliza o rodapé */
-footer {
-    background: linear-gradient(to right, #2c3e50, #3498db);
-    color: #fff;
-    text-align: center;
-    padding: 1.5rem;
-    position: relative;
-    width: 100%;
-    font-size: 1rem;
-}
-
-footer a {
-    color: #ecf0f1;
-    text-decoration: none;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 2rem;
+    if (!pesquisaNormalizada) {
+        section.innerHTML = "<p>Nada foi encontrado. Você precisa digitar o nome do poeta ou título da obra.</p>";
+        return;
     }
 
-    .pesquisa {
-        flex-direction: column;
-        align-items: stretch;
+    let resultados = "";
+
+    for (let dado of dados) {
+        let poeta = normalizeString(dado.poeta);
+        let descricao = normalizeString(dado.descricao);
+        let obras = dado.obras.map(obra => normalizeString(obra.titulo)).join(' ');
+
+        if (poeta.includes(pesquisaNormalizada) || descricao.includes(pesquisaNormalizada) || obras.includes(pesquisaNormalizada)) {
+            resultados += `
+            <div class="item-resultado">
+                <h2><a href="${dado.wikipedia}" target="_blank">${dado.poeta}</a></h2>
+                <p>${dado.descricao}</p>
+                <ul>
+                    ${dado.obras.map(obra => `
+                        <li><a href="${obra.link}" target="_blank">${obra.titulo}</a></li>
+                    `).join('')}
+                </ul>
+            </div>
+            `;
+        }
     }
 
-    .pesquisa input,
-    .pesquisa button {
-        width: 100%;
+    if (!resultados) {
+        resultados = "<p>Nada foi encontrado.</p>";
     }
 
-    .resultados-pesquisa {
-        max-width: 95%;
-    }
+    section.innerHTML = resultados;
+    // Mostrar a seção de resultados após a pesquisa
+    section.classList.add('mostrar');
+
+    // Limpar o campo de pesquisa
+    campoPesquisa.value = ''; // Limpa o campo de pesquisa
 }
 
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 1.6rem;
+// Adiciona o evento de escuta para o campo de pesquisa
+document.getElementById("campo-pesquisa").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        pesquisar();
     }
-
-    .item-resultado h2 {
-        font-size: 1.4rem;
-    }
-}
+});
