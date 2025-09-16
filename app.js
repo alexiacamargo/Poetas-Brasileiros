@@ -3,54 +3,56 @@ function normalizeString(str) {
 }
 
 function pesquisar() {
-    let section = document.getElementById("resultados-pesquisa");
-    let campoPesquisa = document.getElementById("campo-pesquisa");
+    const section = document.getElementById("resultados-pesquisa");
+    const campoPesquisa = document.getElementById("campo-pesquisa");
+    const pesquisaNormalizada = normalizeString(campoPesquisa.value.trim());
 
-    // Inicialmente, esconder a seção de resultados
     section.classList.remove('mostrar');
 
-    let pesquisaNormalizada = normalizeString(campoPesquisa.value.trim());
-
     if (!pesquisaNormalizada) {
-        section.innerHTML = "<p>Nada foi encontrado. Você precisa digitar o nome do poeta ou título da obra.</p>";
+        section.innerHTML = '<p class="mensagem-inicial">Por favor, digite o nome do poeta ou título da obra.</p>';
+        section.classList.add('mostrar');
         return;
     }
 
     let resultados = "";
 
-    for (let dado of dados) {
-        let poeta = normalizeString(dado.poeta);
-        let descricao = normalizeString(dado.descricao);
-        let obras = dado.obras.map(obra => normalizeString(obra.titulo)).join(' ');
+    for (const dado of dados) {
+        const poeta = normalizeString(dado.poeta);
+        const descricao = normalizeString(dado.descricao);
+        const obras = dado.obras.map(obra => normalizeString(obra.titulo)).join(' ');
 
         if (poeta.includes(pesquisaNormalizada) || descricao.includes(pesquisaNormalizada) || obras.includes(pesquisaNormalizada)) {
             resultados += `
-            <div class="item-resultado">
-                <h2><a href="${dado.wikipedia}" target="_blank">${dado.poeta}</a></h2>
-                <p>${dado.descricao}</p>
-                <ul>
-                    ${dado.obras.map(obra => `
-                        <li><a href="${obra.link}" target="_blank">${obra.titulo}</a></li>
-                    `).join('')}
-                </ul>
-            </div>
+                <div class="item-resultado">
+                    <img src="${dado.imagem}" alt="Foto de ${dado.poeta}">
+                    <div class="conteudo">
+                        <h2><a href="${dado.wikipedia}" target="_blank" aria-label="Saiba mais sobre ${dado.poeta}">${dado.poeta}</a></h2>
+                        <p class="descricao-meta">${dado.descricao}</p>
+                        <ul>
+                            ${dado.obras.map(obra => `
+                                <li><a href="${obra.link}" target="_blank" aria-label="Leia mais sobre ${obra.titulo}">${obra.titulo}</a></li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>
             `;
         }
     }
 
-    if (!resultados) {
-        resultados = "<p>Nada foi encontrado.</p>";
-    }
-
-    section.innerHTML = resultados;
-    // Mostrar a seção de resultados após a pesquisa
+    section.innerHTML = resultados || '<p class="mensagem-inicial">Nenhum resultado encontrado. Tente outro termo.</p>';
     section.classList.add('mostrar');
-
-    // Limpar o campo de pesquisa
-    campoPesquisa.value = ''; // Limpa o campo de pesquisa
+    campoPesquisa.value = '';
 }
 
-// Adiciona o evento de escuta para o campo de pesquisa
+function resetarPesquisa() {
+    const section = document.getElementById("resultados-pesquisa");
+    const campoPesquisa = document.getElementById("campo-pesquisa");
+    section.innerHTML = '<p class="mensagem-inicial">Pesquise acima para descobrir poetas brasileiros e suas obras!</p>';
+    section.classList.add('mostrar');
+    campoPesquisa.value = '';
+}
+
 document.getElementById("campo-pesquisa").addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
         pesquisar();
