@@ -1,25 +1,69 @@
-/* Adiciona estilo ao body e ao layout */
+/* Importa fonte do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
 body {
-    font-family: "Alegreya", serif;
-    background-color: #F5F5F5;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f8f1e9;
     margin: 0;
     padding: 0;
-    color: #3E2723;
+    color: #2c1e1a;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
+    overflow-x: hidden; 
+    box-sizing: border-box; 
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+main {
+    flex: 1;
+}
+
+/* Tema escuro */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #2c1e1a;
+        color: #f8f1e9;
+    }
+    header, footer {
+        background-color: #4a2e24;
+    }
+    .resultados-pesquisa {
+        background-color: #3a2520;
+    }
+    .item-resultado {
+        background: #4a2e24;
+    }
+    .pesquisa input {
+        background-color: #5a3b32;
+        color: #f8f1e9;
+        border-color: #6d4c41;
+    }
 }
 
 /* Estiliza o cabeçalho */
 header {
-    background-color: #6D4C41;
-    color: #FFFFFF;
-    padding: 1rem;
+    background-color: #6d4c41;
+    color: #fff;
+    padding: 1.5rem;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
 }
 
 /* Estiliza o título */
 header h1 {
-    font-size: 2.5rem;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 2.8rem;
     margin: 0;
-    letter-spacing: 0.1rem;
+    letter-spacing: 0.05rem;
 }
 
 /* Estiliza a seção de pesquisa */
@@ -27,107 +71,236 @@ header h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2rem;
+    margin: 2.5rem auto;
+    max-width: 90vw; 
+    padding: 0 1rem;
 }
 
-/* Estiliza os inputs dentro da seção de pesquisa */
+/* Estiliza o input de pesquisa */
 .pesquisa input {
-    width: 100%; /* 100% da largura do contêiner pai */
-    max-width: 40rem; /* Limita a largura máxima */
-    border: 1px solid #3E2723;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-    color: #3E2723;
+    width: 100%;
+    max-width: 500px;
+    padding: 0.8rem;
+    border: 2px solid #6d4c41;
+    border-radius: 8px;
     font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-/* Estiliza os botões dentro da seção de pesquisa */
+.pesquisa input:focus {
+    outline: none;
+    border-color: #4a2e24;
+    box-shadow: 0 0 8px rgba(74, 46, 36, 0.3);
+}
+
+/* Estiliza os botões */
+.botoes-pesquisa {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
+}
+
 .pesquisa button {
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 1.5rem;
     border: none;
-    border-radius: 0.5rem;
-    background-color: #6D4C41;
-    color: #FFFFFF;
+    border-radius: 8px;
+    background-color: #6d4c41;
+    color: #fff;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .pesquisa button:hover {
-    background-color: #4E342E;
+    background-color: #4a2e24;
+    transform: translateY(-2px);
 }
 
-/* Estiliza a caixa de resultados da pesquisa */
+/* Estiliza a seção de resultados */
 .resultados-pesquisa {
-    width: 100%; /* 100% da largura do contêiner pai */
-    max-width: 60rem; /* Limita a largura máxima */
-    max-height: 60vh; /* Altura máxima da caixa de resultados */
-    overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+    max-width: 90vw;
     margin: 2rem auto;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    background-color: #FFFFFF;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    display: none; /* Inicialmente escondido */
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 70vh;
+    overflow-y: auto;
+    transition: opacity 0.3s ease-in-out;
+    width: 100%;
 }
 
-/* Exibe a caixa de resultados quando a classe 'mostrar' é adicionada */
 .resultados-pesquisa.mostrar {
-    display: block;
+    opacity: 1;
 }
 
-/* Estiliza cada item de resultado */
+/* Estiliza cada item de resultado com layout flexível */
 .item-resultado {
-    background: #FAF3E0;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: #f9e6d4;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    transition: transform 0.2s;
+    width: 100%;
 }
 
-/* Estiliza os títulos dentro dos itens de resultado */
+/* Estiliza a imagem do poeta */
+.item-resultado img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #6d4c41;
+    flex-shrink: 0;
+}
+
+/* Estiliza o conteúdo textual ao lado da imagem */
+.item-resultado .conteudo {
+    flex: 1;
+    width: 100%;
+}
+
+.item-resultado:hover {
+    transform: scale(1.02);
+}
+
 .item-resultado h2 {
+    font-family: 'Libre Baskerville', serif;
     font-size: 1.8rem;
-    color: #3E2723;
-    margin-top: 0;
+    color: #2c1e1a;
+    margin: 0 0 0.5rem;
 }
 
-/* Estiliza os links dentro dos itens de resultado */
 .item-resultado a {
+    color: #6d4c41;
     text-decoration: none;
-    color: #6D4C41;
+    font-weight: 600;
 }
 
 .item-resultado a:hover {
     text-decoration: underline;
 }
 
-/* Estiliza a descrição meta dentro dos itens de resultado */
-.descricao-meta {
-    color: #5D4037;
+.item-resultado ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+}
+
+.item-resultado ul li {
     margin: 0.5rem 0;
 }
 
-/* Estiliza o rodapé da página */
-footer {
-    background-color: #6D4C41;
-    color: #FFFFFF;
-    text-align: center;
-    padding: 1rem;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    font-size: 0.9rem;
+.descricao-meta {
+    color: #5d4037;
+    font-size: 0.95rem;
 }
 
-/* Media queries para responsividade em telas menores */
-@media (max-width: 600px) {
-    .pesquisa input {
-        max-width: 90%; /* Mais espaço em telas pequenas */
-    }
+/* Estiliza a mensagem inicial */
+.mensagem-inicial {
+    text-align: center;
+    color: #5d4037;
+    font-style: italic;
+}
 
+/* Estiliza o rodapé */
+footer {
+    background-color: #6d4c41;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+footer a {
+    color: #f8f1e9;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Estiliza o hint da pesquisa */
+.search-hint {
+    font-size: 0.9rem;
+    color: #5d4037;
+    margin-top: 0.5rem;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Responsividade para tablets */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    .pesquisa {
+        max-width: 90vw;
+    }
     .resultados-pesquisa {
-        max-width: 90%; /* Também se aplica aos resultados */
+        max-width: 90vw;
+    }
+    .item-resultado {
+        flex-direction: column;
+        align-items: center;
+    }
+    .item-resultado img {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* Responsividade para celulares */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    .pesquisa {
+        max-width: 95vw;
+        padding: 0 0.5rem;
+    }
+    .pesquisa input {
+        max-width: 100%;
+    }
+    .botoes-pesquisa {
+        flex-direction: column;
+        width: 100%;
+    }
+    .pesquisa button {
+        width: 100%;
+        justify-content: center;
+    }
+    .resultados-pesquisa {
+        max-width: 95vw;
+        padding: 1rem;
+    }
+    .item-resultado {
+        padding: 1rem;
+    }
+    .item-resultado img {
+        width: 60px;
+        height: 60px;
+    }
+    .item-resultado h2 {
+        font-size: 1.5rem;
     }
 }
