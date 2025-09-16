@@ -88,6 +88,5 @@ let dados = [
             { titulo: "O Caderno Rosa de Laura", link: "https://pt.wikipedia.org/wiki/O_Caderno_Rosa_de_Laura" }
         ],
         wikipedia: "https://pt.wikipedia.org/wiki/Hilda_Hilst"
-    },
-    // Adicione mais poetas e suas obras conforme necessário
+    }
 ];
