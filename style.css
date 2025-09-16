@@ -32,8 +32,7 @@ header h1 {
 
 /* Estiliza os inputs dentro da seção de pesquisa */
 .pesquisa input {
-    width: 100%; /* 100% da largura do contêiner pai */
-    max-width: 40rem; /* Limita a largura máxima */
+    width: 40rem;
     border: 1px solid #3E2723;
     padding: 1rem;
     border-radius: 0.5rem;
@@ -60,8 +59,7 @@ header h1 {
 
 /* Estiliza a caixa de resultados da pesquisa */
 .resultados-pesquisa {
-    width: 100%; /* 100% da largura do contêiner pai */
-    max-width: 60rem; /* Limita a largura máxima */
+    width: 60rem;
     max-height: 60vh; /* Altura máxima da caixa de resultados */
     overflow-y: auto; /* Adiciona rolagem vertical se necessário */
     margin: 2rem auto;
@@ -119,15 +117,4 @@ footer {
     bottom: 0;
     width: 100%;
     font-size: 0.9rem;
-}
-
-/* Media queries para responsividade em telas menores */
-@media (max-width: 600px) {
-    .pesquisa input {
-        max-width: 90%; /* Mais espaço em telas pequenas */
-    }
-
-    .resultados-pesquisa {
-        max-width: 90%; /* Também se aplica aos resultados */
-    }
 }
